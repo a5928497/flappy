@@ -1,8 +1,8 @@
 $(function () {
     var boxx=0;
     var boxy=0;
-    var boxwidth=window.screen.availWidth;//384
-    var boxheight=window.screen.availHeight;//512
+    var boxwidth=window.screen.width;//384
+    var boxheight=window.screen.height;//512
     var backgroundwidth=boxwidth;
     var backgroundheight=boxheight*0.875;
     var groundwidth=18.5;
@@ -10,8 +10,8 @@ $(function () {
 
     var	birdwidth=46;
     var	birdheight=32;
-    var	birdx=192-birdwidth;
-    var	birdy=224-birdheight;
+    var	birdx=(boxwidth/2)-birdwidth;
+    var	birdy=(backgroundheight/2)-birdheight;
     var birdvy=0;        //鸟初始的y轴速度
     var birdimage;
     var gravity=1;		 //重力加速度
@@ -59,8 +59,9 @@ $(function () {
         [0,0],
         [0,0],
         [0,0]];
-
+    //初始化游戏界面
     init();
+
     function init(){
         ctx=document.getElementById('canvas').getContext('2d');
         flysound = document.getElementById('flysound');
@@ -96,6 +97,7 @@ $(function () {
         canvas=document.getElementById("canvas");
         canvas.setAttribute("width",boxwidth);
         canvas.setAttribute("height",boxheight);
+        // canvas.style.cssFloat = "left";
         canvas.addEventListener("mousedown",mouseDown,false);
         window.addEventListener("keydown",keyDown,false);
         //window.addEventListener("keydown",getkeyAndMove,false);
