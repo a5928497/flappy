@@ -63,6 +63,7 @@ $(function () {
     init();
 
     function init(){
+        $("body").css("margin",0);
         ctx=document.getElementById('canvas').getContext('2d');
         flysound = document.getElementById('flysound');
         scoresound = document.getElementById('scoresound');
@@ -97,7 +98,6 @@ $(function () {
         canvas=document.getElementById("canvas");
         canvas.setAttribute("width",boxwidth);
         canvas.setAttribute("height",boxheight);
-        // canvas.style.cssFloat = "left";
         canvas.addEventListener("mousedown",mouseDown,false);
         window.addEventListener("keydown",keyDown,false);
         //window.addEventListener("keydown",getkeyAndMove,false);
