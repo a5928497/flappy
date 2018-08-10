@@ -28,7 +28,7 @@
 		<thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version>
 		<docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
 		<docker.space>lizili_test</docker.space>
-		<docker.image>bargain</docker.image>
+		<docker.image>flappy</docker.image>
 	</properties>
 
 	<dependencies>
@@ -68,13 +68,193 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/**</include>
+					<include>**/*.yml</include>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<finalName>Flappy</finalName>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib</classpathPrefix>
+							<mainClass>com.yukoon.bargain.FlappyApplication</mainClass>
+						</manifest>
+					</archive>
+					<excludes>
+						<exclude>*</exclude>
+					</excludes>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<appendAssemblyId>true</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/main/assemble/package.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>install</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<providerImplementations>
+						<git>jgit</git>
+					</providerImplementations>
+					<username>${scm.git.username}</username>
+					<password>${scm.git.password}</password>
+					<releaseProfiles>releases</releaseProfiles>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-jgit</artifactId>
+						<version>1.9.5</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.9.5</version>
+				<configuration>
+					<providerImplementations>
+						<git>jgit</git>
+					</providerImplementations>
+					<connectionType>connection</connectionType>
+					<username>${scm.git.username}</username>
+					<password>${scm.git.password}</password>
+					<message>a</message>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-jgit</artifactId>
+						<version>1.9.5</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<!-- Docker -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>deploy</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<serverId>docker-yukoon</serverId>
+					<imageName>${docker.repostory}/${docker.space}/${docker.image}:${project.version}</imageName>
+					<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+					<registryUrl>${docker.repostory}</registryUrl>
+					<forceTags>true</forceTags>
+					<noCache>true</noCache>
+					<buildArgs>
+						<FINAL_NAME>${project.artifactId}-${project.version}-distribution.tar.gz</FINAL_NAME>
+					</buildArgs>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.artifactId}-${project.version}-distribution.tar.gz</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>install</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
-
+	<scm>
+		<url>https://github.com/a5928497/flappy.git</url>
+		<connection>scm:git:https://github.com/a5928497/flappy.git</connection>
+		<developerConnection>scm:git:https://github.com/a5928497/flappy.git</developerConnection>
+		<tag>0.0.106</tag>
+	</scm>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Releases Repository</name>
+			<url>http://192.168.1.10:8181/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Snapshots Repository</name>
+			<url>http://192.168.1.10:8181/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
