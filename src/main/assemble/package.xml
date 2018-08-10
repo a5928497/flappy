@@ -19,7 +19,7 @@
             <directory>target</directory>
             <outputDirectory></outputDirectory>
             <includes>
-                <include>Bargain.jar</include>
+                <include>Flappy.jar</include>
             </includes>
         </fileSet>
     </fileSets>
