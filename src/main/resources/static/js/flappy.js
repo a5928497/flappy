@@ -1,12 +1,12 @@
 $(function () {
     var boxx=0;
     var boxy=0;
-    var boxwidth=384;
-    var boxheight=512;
-    var backgroundwidth=384;
-    var backgroundheight=448;
+    var boxwidth=window.screen.availWidth;//384
+    var boxheight=window.screen.availHeight;//512
+    var backgroundwidth=boxwidth;
+    var backgroundheight=boxheight*0.875;
     var groundwidth=18.5;
-    var groundheight=64;
+    var groundheight=boxheight*0.125;
 
     var	birdwidth=46;
     var	birdheight=32;
@@ -60,6 +60,7 @@ $(function () {
         [0,0],
         [0,0]];
 
+    init();
     function init(){
         ctx=document.getElementById('canvas').getContext('2d');
         flysound = document.getElementById('flysound');
@@ -93,6 +94,8 @@ $(function () {
         times=Math.ceil(boxwidth/groundwidth)+1;
         initPipe();
         canvas=document.getElementById("canvas");
+        canvas.setAttribute("width",boxwidth);
+        canvas.setAttribute("height",boxheight);
         canvas.addEventListener("mousedown",mouseDown,false);
         window.addEventListener("keydown",keyDown,false);
         //window.addEventListener("keydown",getkeyAndMove,false);
