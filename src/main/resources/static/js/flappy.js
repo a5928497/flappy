@@ -66,9 +66,7 @@ $(function () {
         $("body").css("margin",0);
         ctx=document.getElementById('canvas').getContext('2d');
         flysound = document.getElementById('flysound');
-        scoresound = document.getElementById('scoresound');+++++---****
-            +
-                -----------------
+        scoresound = document.getElementById('scoresound');
         hitsound = document.getElementById('hitsound');
         deadsound = document.getElementById('deadsound');
         swooshingsound = document.getElementById('swooshingsound');
