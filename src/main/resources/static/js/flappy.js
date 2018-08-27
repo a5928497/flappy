@@ -411,10 +411,10 @@ $(function () {
         else if(gamestate==2){
             //ctx.fillRect(boardx+14,boardy+boardheight-40,75,40);
             //鼠标是否在重新开始按钮上
-            if(mx>boardx+14&&mx<boardx+89&&my>boardy+boardheight-40&&my<boardy+boardheight){
+            // if(mx>boardx+14&&mx<boardx+89&&my>boardy+boardheight-40&&my<boardy+boardheight){
                 playSound(swooshingsound,"sounds/swooshing.mp3");
                 restart();
-            }
+            // }
         }
     }
 
