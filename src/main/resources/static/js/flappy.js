@@ -14,7 +14,7 @@ $(function () {
     var	caty=(backgroundheight/2.5)-catheight;
     var catvy=0;        //猫初始的y轴速度
     var catimage;
-    var gravity=0.8;		 //重力加速度
+    var gravity=0.85;		 //重力加速度
     var jumpvelocity=8;	 //跳跃时获得的向上速度
     var catstate;
 
