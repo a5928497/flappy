@@ -11,7 +11,7 @@ $(function () {
     var	catwidth=boxwidth*0.12;
     var	catheight=catwidth*0.7;
     var	catx=(boxwidth/2)-catwidth;
-    var	caty=(backgroundheight/2)-catheight;
+    var	caty=(backgroundheight/2.5)-catheight;
     var catvy=0;        //猫初始的y轴速度
     var catimage;
     var gravity=1.1;		 //重力加速度
@@ -154,9 +154,9 @@ $(function () {
         //绘制分数板
         ctx.drawImage(boardimage,boardx,boardy,boardwidth,boardheight);
         //绘制当前的得分
-        ctx.fillText(score,boardx+140,boardheight/2+boardy-8);//132
+        ctx.fillText(score,boardx+140,boardheight/2+boardy*0.95);//132
         //绘制最高分
-        ctx.fillText(highscore,boardx+140,boardheight/2+boardy+44);//184
+        ctx.fillText(highscore,boardx+140,boardheight/2+boardy*1.314);//184
     }
     //绘制开始场景(不包括管道)
     function drawBeginScene(){
@@ -301,7 +301,7 @@ $(function () {
             ctx.restore();
         }
     }
-    //绘制扇动翅膀的猫
+    //绘制扇动披风的猫
     function drawMovingCat(){
         if(catstate==1||catstate==2||catstate==3){
             ctx.drawImage(catimage,0,0,92,64,catx,caty,catwidth,catheight);
@@ -341,8 +341,6 @@ $(function () {
         }
         //判断第二组管道
         //如果猫在x轴上与第二组管道重合
-        //这里我原本使用else if出现了问题，但第一版中却没有问题，对比代码后发现原因是上方第一个if后没有加大括号，
-        //这里的else无法区分对应哪一个if，加上大括号后问题解决，建议将if后的内容都加上大括号，养成良好的变成习惯
         else if(catx+catwidth>pipeoncanvas[1][0]&&catx+catwidth<pipeoncanvas[1][0]+pipewidth+catwidth){
             //如果猫在y轴上与第二组管道上部或下部重合
             if(caty<backgroundheight-pipeoncanvas[1][1]-blankwidth||caty+catheight>backgroundheight-pipeoncanvas[1][1]){
@@ -385,7 +383,7 @@ $(function () {
         }
     }
 
-    //处理鼠标点击事件，相比键盘多了位置判断
+    //处理点击事件，相比键盘多了位置判断
     function mouseDown(ev){
         var mx;			//存储鼠标横坐标
         var my;			//存储鼠标纵坐标
@@ -424,8 +422,8 @@ $(function () {
         score=0;		//当前分数清零
         pipenumber=0;	//读取的管道数清零
         initPipe();		//重新初始化水管高度
-        catx=192-catwidth;	//猫的位置和速度回到初始值
-        caty=224-catheight;
+        catx=(boxwidth/2)-catwidth;	//猫的位置和速度回到初始值
+        caty=(backgroundheight/2.5)-catheight;
         catvy=0;
     }
 
