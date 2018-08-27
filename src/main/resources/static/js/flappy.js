@@ -12,7 +12,7 @@ $(function () {
     var	catheight=catwidth*0.7;
     var	catx=(boxwidth/2)-catwidth;
     var	caty=(backgroundheight/2)-catheight;
-    var catvy=0;        //鸟初始的y轴速度
+    var catvy=0;        //猫初始的y轴速度
     var catimage;
     var gravity=1.1;		 //重力加速度
     var jumpvelocity=10;	 //跳跃时获得的向上速度
@@ -63,7 +63,6 @@ $(function () {
     init();
 
     function init(){
-        $("body").css("margin",0);
         ctx=document.getElementById('canvas').getContext('2d');
         flysound = document.getElementById('flysound');
         scoresound = document.getElementById('scoresound');
@@ -120,27 +119,27 @@ $(function () {
         //游戏未开始
         if(gamestate==0){
             drawBeginScene();	//绘制开始场景
-            drawCat();			//绘制鸟
+            drawCat();			//绘制猫
             drawTip(); 			//绘制提示
         }
         //游戏进行中
         if(gamestate==1){
             catvy=catvy+gravity;
             drawScene(); 		//绘制场景
-            drawCat();			//绘制鸟
+            drawCat();			//绘制猫
             drawScore();		//绘制分数
-            checkCat();		//检测鸟是否与物体发生碰撞
+            checkCat();		//检测猫是否与物体发生碰撞
         }
         //游戏结束
         if(gamestate==2){
-            if(caty+catheight<backgroundheight)	//如果鸟没有落地
+            if(caty+catheight<backgroundheight)	//如果猫没有落地
                 catvy=catvy+gravity;
             else {
                 catvy=0;
                 caty=backgroundheight-catheight;
             }
             drawEndScene();		//绘制结束场景
-            drawCat();		    //绘制鸟
+            drawCat();		    //绘制猫
             drawScoreBoard();   //绘制分数板
             //ctx.fillRect(boardx+14,boardy+boardheight-40,75,40); // 测试重新开始按钮的位置
         }
@@ -266,7 +265,7 @@ $(function () {
         if(gamestate==0){
             drawMovingCat();
         }
-        //根据鸟的y轴速度来判断鸟的朝向,只在游戏进行阶段生效
+        //根据猫的y轴速度来判断猫的朝向,只在游戏进行阶段生效
         else if(gamestate==1){
             ctx.save();
             if(catvy<=8){
@@ -292,7 +291,7 @@ $(function () {
             drawMovingCat();
             ctx.restore();
         }
-        //游戏结束后鸟头向下并停止活动
+        //游戏结束后猫头向下并停止活动
         else if(gamestate==2){
             ctx.save();
             ctx.translate(catx+catwidth/2,caty+catheight/2);
@@ -302,7 +301,7 @@ $(function () {
             ctx.restore();
         }
     }
-    //绘制扇动翅膀的鸟
+    //绘制扇动翅膀的猫
     function drawMovingCat(){
         if(catstate==1||catstate==2||catstate==3){
             ctx.drawImage(catimage,0,0,92,64,catx,caty,catwidth,catheight);
@@ -323,7 +322,7 @@ $(function () {
         ctx.fillText(score,boxwidth/2-2,120);
     }
 
-    //检查鸟是否与管道产生碰撞（不可能与第三组管道重合），以及鸟是否碰撞地面
+    //检查猫是否与管道产生碰撞（不可能与第三组管道重合），以及猫是否碰撞地面
     function checkCat(){
 
         //通过了一根管道加一分
@@ -333,19 +332,19 @@ $(function () {
             score++;
         }
         //先判断第一组管道
-        //如果鸟在x轴上与第一组管道重合
+        //如果猫在x轴上与第一组管道重合
         if(catx+catwidth>pipeoncanvas[0][0]&&catx+catwidth<pipeoncanvas[0][0]+pipewidth+catwidth){
-            //如果鸟在y轴上与第一组管道上部或下部重合
+            //如果猫在y轴上与第一组管道上部或下部重合
             if(caty<backgroundheight-pipeoncanvas[0][1]-blankwidth||caty+catheight>backgroundheight-pipeoncanvas[0][1]){
                 hitPipe();
             }
         }
         //判断第二组管道
-        //如果鸟在x轴上与第二组管道重合
+        //如果猫在x轴上与第二组管道重合
         //这里我原本使用else if出现了问题，但第一版中却没有问题，对比代码后发现原因是上方第一个if后没有加大括号，
         //这里的else无法区分对应哪一个if，加上大括号后问题解决，建议将if后的内容都加上大括号，养成良好的变成习惯
         else if(catx+catwidth>pipeoncanvas[1][0]&&catx+catwidth<pipeoncanvas[1][0]+pipewidth+catwidth){
-            //如果鸟在y轴上与第二组管道上部或下部重合
+            //如果猫在y轴上与第二组管道上部或下部重合
             if(caty<backgroundheight-pipeoncanvas[1][1]-blankwidth||caty+catheight>backgroundheight-pipeoncanvas[1][1]){
                 hitPipe();
             }
@@ -425,7 +424,7 @@ $(function () {
         score=0;		//当前分数清零
         pipenumber=0;	//读取的管道数清零
         initPipe();		//重新初始化水管高度
-        catx=192-catwidth;	//鸟的位置和速度回到初始值
+        catx=192-catwidth;	//猫的位置和速度回到初始值
         caty=224-catheight;
         catvy=0;
     }
