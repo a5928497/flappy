@@ -381,6 +381,10 @@ $(function () {
             playSound(flysound,"sounds/wing.mp3");
             catvy=-jumpvelocity;
         }
+        else if(gamestate == 2) {
+            playSound(swooshingsound,"sounds/swooshing.mp3");
+            restart();
+        }
     }
 
     //处理点击事件，相比键盘多了位置判断
