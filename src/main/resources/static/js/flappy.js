@@ -25,7 +25,7 @@ $(function () {
     var pipedownimage;
     var pipewidth=boxwidth*0.19;	 //管道的宽度
     var blankwidth=catheight*3.9375;  //上下管道之间的间隔
-    var pipeinterval=boxwidth*0.55;	//两个管道之间的间隔
+    var pipeinterval=boxwidth*0.7;	//两个管道之间的间隔
     var pipenumber=0;		//当前已经读取管道高度的个数
     var fps=30;				//游戏的帧数，推荐在30~60之间
     var gamestate=0;		//游戏状态：0--未开始，1--已开始，2--已结束
@@ -387,7 +387,7 @@ $(function () {
         }
     }
 
-    //处理点击事件，相比键盘多了位置判断
+    //处理鼠标点击事件，相比键盘多了位置判断
     function mouseDown(ev){
         var mx;			//存储鼠标横坐标
         var my;			//存储鼠标纵坐标
