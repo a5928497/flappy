@@ -14,8 +14,8 @@ $(function () {
     var	caty=(backgroundheight/2.5)-catheight;
     var catvy=0;        //猫初始的y轴速度
     var catimage;
-    var gravity=0.85;		 //重力加速度
-    var jumpvelocity=8;	 //跳跃时获得的向上速度
+    var gravity=1;		 //重力加速度
+    var jumpvelocity=10;	 //跳跃时获得的向上速度
     var catstate;
 
     var upbackground;
@@ -24,7 +24,7 @@ $(function () {
     var pipeupimage;
     var pipedownimage;
     var pipewidth=boxwidth*0.19;	 //管道的宽度
-    var blankwidth=catheight*3.9375;  //上下管道之间的间隔
+    var blankwidth=catheight*4;  //上下管道之间的间隔
     var pipeinterval=boxwidth*0.7;	//两个管道之间的间隔
     var pipenumber=0;		//当前已经读取管道高度的个数
     var fps=30;				//游戏的帧数，推荐在30~60之间
