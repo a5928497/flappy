@@ -97,8 +97,8 @@ $(function () {
         canvas=document.getElementById("canvas");
         canvas.setAttribute("width",boxwidth);
         canvas.setAttribute("height",boxheight);
-        canvas.addEventListener("mousedown",mouseDown,false);
-        window.addEventListener("keydown",keyDown,false);
+        canvas.addEventListener("touchstart",touchDown,false);
+        // window.addEventListener("keydown",keyDown,false);
         //window.addEventListener("keydown",getkeyAndMove,false);
         setInterval(run,1000/fps);
     }
@@ -414,6 +414,38 @@ $(function () {
             // if(mx>boardx+14&&mx<boardx+89&&my>boardy+boardheight-40&&my<boardy+boardheight){
                 playSound(swooshingsound,"sounds/swooshing.mp3");
                 restart();
+            // }
+        }
+    }
+
+    //处理移动端触摸事件，相比键盘多了位置判断
+    function touchDown(ev){
+        ev = ev || event;
+        var mx;			//存储鼠标横坐标
+        var my;			//存储鼠标纵坐标
+        if ( ev.layerX ||  ev.layerX == 0) { // Firefox
+            mx= ev.layerX;
+            my = ev.layerY;
+        } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+            mx = ev.offsetX;
+            my = ev.offsetY;
+        }
+        if(gamestate==0){
+            playSound(swooshingsound,"sounds/swooshing.mp3");
+            catvy=-jumpvelocity;
+            gamestate=1;
+        }
+        else if(gamestate==1){
+            playSound(flysound,"sounds/wing.mp3");
+            catvy=-jumpvelocity;
+        }
+        //游戏结束后判断是否点击了重新开始
+        else if(gamestate==2){
+            //ctx.fillRect(boardx+14,boardy+boardheight-40,75,40);
+            //鼠标是否在重新开始按钮上
+            // if(mx>boardx+14&&mx<boardx+89&&my>boardy+boardheight-40&&my<boardy+boardheight){
+            playSound(swooshingsound,"sounds/swooshing.mp3");
+            restart();
             // }
         }
     }
